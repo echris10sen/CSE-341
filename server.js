@@ -7,7 +7,7 @@
  *******************************************/
 const assignmentRoutes = require('./routes/assignments');
 const express = require('express');
-const bodyParser = require('body-parser');
+// const bodyParser = require('body-parser');
 const colors = require('colors');
 const env = require('dotenv').config();
 const staticRoutes = require('./routes/static');
