@@ -5,12 +5,13 @@
 /* ******************************************
  * Require statements for the project
  *******************************************/
-const assignmentRoutes = require('./routes/assignments');
+const routes = require('./src/routes');
 const express = require('express');
 // const bodyParser = require('body-parser');
 const colors = require('colors');
-const env = require('dotenv').config();
-const staticRoutes = require('./routes/static');
+const cleanup = require('./src/config/mongodbDisconnect');
+const staticRoutes = require('./src/routes/static');
+const env = require('./src/config/index');
 
 
 
@@ -18,6 +19,7 @@ const staticRoutes = require('./routes/static');
  * Variables for middleware
  *******************************************/
 const app = express();
+// connectDB().catch(console.dir);
 
 // For simple debugging
 colors.enable();
@@ -32,14 +34,36 @@ colors.enable();
 app.use(staticRoutes);
 
 //Index Route
-app.get('/', assignmentRoutes);
+app.use('/', routes);
 
 /* ***********************
  * Local Server Information
  * Values from .env (environment) file
  *************************/
-const port = process.env.PORT || 3000;
-const host = process.env.HOST || 'localhost';
+const port = env.port;
+const host = env.host;
+
+
+/******************************************
+ * Code Cleanup
+ *******************************************/
+process.on('beforeExit', async function() {
+  console.log('About to exit, running some cleanup code...');
+  // Your cleanup code here...
+  cleanup.disconnect();
+});
+
+process.on('SIGINT', async function() {
+  console.log('Received SIGINT, running cleanup code...');
+  cleanup.disconnect();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async function() {
+  console.log('Received SIGTERM, running cleanup code...');
+  cleanup.disconnect();
+  process.exit(0);
+});
 
 /* ***********************
  * Log statement to confirm server operation
