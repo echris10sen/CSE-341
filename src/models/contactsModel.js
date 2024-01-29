@@ -9,6 +9,9 @@
  * Methods:
  *      -contactsModel.contactsList: Get the list of contacts
  *      -contactsModel.getContact: Get a contact by ID
+ *      -contactsModel.createContact: Create a contact
+ *      -contactsModel.updateContact: Update a contact
+ *      -contactsModel.deleteContact: Delete a contact
  * Exports
  *      -contactsModel: The contactsModel object
  * ***************************************/
@@ -67,6 +70,68 @@ contactsModel.getContact = async function(id) {
         const results = await cursor.toArray();
         console.log("results: ", results);
         return results;
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+/******************************************
+ * Name: contactsModel.createContact
+ * Description: Create a contact in the database
+ * Parameters: contact
+ * Returns: A Promise that resolves to a json object
+ * Notes: None
+ * Issues: None
+ * ***************************************/
+contactsModel.createContact = async function(contact) {
+    console.log("In createContact in contactsModel.js");
+    console.log("contact: ".blue, contact);
+    try {
+        const database = await client.db("cse341");
+        const collection = await database.collection("contacts");
+        
+        const result = await collection.insertOne(contact);
+        return result;
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+/******************************************
+ * Name: contactsModel.updateContact
+ * Description: Update a contact in the database
+ * Parameters: id, contact
+ * Returns: A Promise that resolves to a json object
+ * Notes: None
+ * Issues: None
+ * ***************************************/
+contactsModel.updateContact = async function(id, contact) {
+    try {
+        const database = await client.db("cse341");
+        const collection = await database.collection("contacts");
+        
+        const result = await collection.updateOne({_id: new ObjectId(id)}, {$set: contact});
+        return result;
+    } catch (e) {
+        console.error(e);
+    }
+};
+
+/******************************************
+ * Name: contactsModel.deleteContact
+ * Description: Delete a contact from the database
+ * Parameters: id
+ * Returns: A Promise that resolves to a json object
+ * Notes: None
+ * Issues: None
+ * ***************************************/
+contactsModel.deleteContact = async function(id) {
+    try {
+        const database = await client.db("cse341");
+        const collection = await database.collection("contacts");
+        
+        const result = await collection.deleteOne({_id: new ObjectId(id)});
+        return result;
     } catch (e) {
         console.error(e);
     }

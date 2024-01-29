@@ -1,0 +1,53 @@
+@hostname = https://jazz-api.onrender.com
+@localhost = http://localhost:5000
+get {{localhost}}
+
+###
+
+get {{hostname}}
+
+###
+# ContactList
+get {{hostname}}/contacts
+
+###
+# Contact
+get {{hostname}}/contacts/?id=65ac66da53a37a0c6112d502
+
+###
+# ContactList
+get {{localhost}}/contacts
+
+###
+# Contact
+get {{localhost}}/contacts/?id=65ac66da53a37a0c6112d502
+
+###
+# AddContact
+post {{localhost}}/contacts
+Content-Type: application/json
+
+{
+    "firstName": "Bob",
+    "lastName": "Saget",
+    "email": "jsdemo@demo.com",
+    "favoriteColor": "Yellow",
+    "birthday": "1956-05-17"
+}
+
+###
+# UpdateContact
+put {{localhost}}/contacts/?id=65b5f97e486cf938a0bbc8e0
+Content-Type: application/json
+
+{
+    "firstName": "Jerry",
+    "lastName": "Seinfeld",
+    "email": "changeHere<Hello>@hotmail.com",
+    "favoriteColor": "electric pinappleopolis",
+    "birthday": "1954-04-29"
+}
+
+###
+# DeleteContact
+delete {{localhost}}/contacts/?id=65b5fb4b9e057923ac945d72

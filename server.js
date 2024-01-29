@@ -7,7 +7,7 @@
  *******************************************/
 const routes = require('./src/routes');
 const express = require('express');
-// const bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
 const colors = require('colors');
 const cleanup = require('./src/config/mongodbDisconnect');
 const staticRoutes = require('./src/routes/static');
@@ -27,7 +27,8 @@ colors.enable();
 /* ******************************************
  * Middleware
  *******************************************/
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 /* ******************************************
  * Routes
  *******************************************/
