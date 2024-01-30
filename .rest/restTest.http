@@ -80,11 +80,11 @@ Content-Type: application/json
 {
     "firstName": "Jerry",
     "lastName": "Seinfeld",
-    "email": "changeHere<Hello>@hotmail.com",
+    "email": "changeHere<hello>@hotmail.com",
     "favoriteColor": "electric pinappleopolis",
     "birthday": "1954-04-29"
 }
 
 ###
 # DeleteContact
-delete {{hostname}}/contacts/?id=65b5fb4b9e057923ac945d72
+delete {{hostname}}/contacts/?id=65b83fca74d1ef0a4adfb9af
